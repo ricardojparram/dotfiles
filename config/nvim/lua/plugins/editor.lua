@@ -177,4 +177,19 @@ return {
       notify_on_error = true,
     },
   },
+  {
+    "chrisgrieser/nvim-rip-substitute",
+    cmd = "RipSubstitute",
+    opts = {},
+    keys = {
+      {
+        "<leader>R",
+        function()
+          require("rip-substitute").sub()
+        end,
+        mode = { "n", "x" },
+        desc = " rip substitute",
+      },
+    },
+  },
 }

@@ -51,3 +51,8 @@ keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR
 keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
   desc = "Search on current file",
 })
+
+-- rip substitution
+keymap.set({ "n", "x" }, "<leader>fs", function()
+  require("rip-substitute").sub()
+end, { desc = " rip substitute" })
