@@ -11,6 +11,7 @@
     "type": "small",
     "padding": {
       "top": 2,
+      "left": 2,
     },
     "color": {
       "1": "\u001b[3;37m",
@@ -31,11 +32,10 @@
       "format": "\u001b[3;35m{1}\u001b[38;5;215m@\u001b[3;33m{2}",
       "outputColor": "\u001b[3;37m",
     },
-
     {
       "type": "os",
       "key": "os ┐",
-      "format": "\u001b[3;35m{name} {codename}",
+      "format": "\u001b[3;35m{name} \u001b[3;33m{version-id}",
       "keyColor": "\u001b[38;5;215m", // = color3
       "outputColor": "\u001b[3;37m",
     },
@@ -97,7 +97,6 @@
       "keyColor": "\u001b[38;5;215m",
       "outputColor": "\u001b[3;37m",
     },
-    "break",
     "break",
   ],
 }
