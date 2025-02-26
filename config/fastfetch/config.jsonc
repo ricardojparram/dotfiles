@@ -12,6 +12,9 @@
     "padding": {
       "top": 2,
     },
+    "color": {
+      "1": "italic_",
+    },
   },
   "display": {
     "separator": "",
@@ -21,56 +24,72 @@
   },
   "modules": [
     "break",
-    "title",
+    {
+      "type": "title",
+      "key": "user",
+      "keyColor": "\u001b[38;5;215m", // = color3
+      "format": "{1}@{2}",
+      "outputColor": "italic_",
+    },
+
     {
       "type": "os",
       "key": "os ┐",
-      "keyColor": "yellow", // = color3
+      "keyColor": "\u001b[38;5;215m", // = color3
+      "outputColor": "italic_",
     },
     {
       "type": "kernel",
       "key": "   ├ kernel",
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "packages",
       "key": "   └ pkgs  ",
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "custom",
-      "format": "\u001b[33mpc ┐",
+      "format": "\u001b[38;5;215mpc ┐",
     },
     {
       "type": "cpu",
       "key": "   ├ cpu",
       "showPeCoreCount": true,
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "memory",
       "key": "   ├ memory",
-      "keyColor": "yellow",
+      "format": "[{1} / {2}] {3}",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "uptime",
       "format": "{2}h {3}m",
       "key": "   └ uptime",
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "custom",
-      "format": "\u001b[33mip ┐",
+      "format": "\u001b[38;5;215mip ┐",
     },
     {
       "type": "localip",
       "key": "   ├ local",
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     {
       "type": "publicip",
       "key": "   └ public",
-      "keyColor": "yellow",
+      "keyColor": "\u001b[38;5;215m",
+      "outputColor": "italic_",
     },
     "break",
     "break",
