@@ -56,10 +56,12 @@ El tarball incluye, con rutas relativas a `$HOME`:
 - memoria nativa `~/.claude/projects/*/memory/`
 - **chats/transcripts** `~/.claude/projects/*/*.jsonl`
 
-Restore directo si el PC nuevo tiene mismo usuario/layout. **Chats:** el dir de
-cada proyecto codifica su ruta absoluta, así que el historial solo resuelve si
-el usuario y las rutas de los proyectos coinciden; si no, los `.jsonl` quedan
-guardados pero Claude no los asocia a los proyectos nuevos.
+**Cambio de usuario/HOME:** el backup guarda el `$HOME` original. Si en el PC
+nuevo `$HOME` difiere (ej. otro usuario), el `restore` reescribe solo el nombre
+de los project dirs (que codifican la ruta absoluta) y el `cwd` dentro de los
+`.jsonl`, reasociando chats y memorias al HOME nuevo. Requisito: el **sub-path**
+del proyecto bajo el home debe coincidir (ej. `…/Escritorio/git/dotfiles`); si
+el proyecto vive en otra ruta relativa, hay que mover ese dir a mano.
 
 Sync alternativo de engram entre PCs:
 
