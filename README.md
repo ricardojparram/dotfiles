@@ -11,12 +11,15 @@ curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/instal
 `install.sh` (Fedora/dnf) clona el repo, instala paquetes y herramientas,
 aplica los symlinks y pregunta lo que haga falta. Pasos (cada uno confirmable):
 
-1. **Paquetes dnf**: `nvim lazygit fastfetch kitty zsh lsd fzf jq ripgrep` (+git/curl).
+1. **Paquetes dnf**: `nvim lazygit fastfetch kitty zsh lsd fzf jq ripgrep unzip gcc …`.
 2. **oh-my-zsh** + plugins `zsh-autosuggestions`, `zsh-syntax-highlighting`.
 3. **Runtimes JS**: nvm + node LTS + pnpm (corepack), bun. **opencode**.
-4. **Shell** por defecto → zsh.
-5. **Symlinks** (ver tabla).
-6. **MCP** merge en `~/.claude.json`. **userChrome** de Firefox (opcional).
+4. **Homebrew** + tap de Gentleman: `engram`, `gentle-ai`, `gga`, `gitleaks`, `lazydocker`.
+   (engram corre sobre brew.)
+5. **JetBrainsMono Nerd Font** (iconos para lsd/fastfetch/kitty).
+6. **Shell** por defecto → zsh.
+7. **Symlinks** (ver tabla).
+8. **MCP** merge en `~/.claude.json`. **userChrome** de Firefox (opcional).
 
 Es idempotente: respalda archivos reales que pise en `*.bak.<fecha>` y saltea
 lo ya instalado.

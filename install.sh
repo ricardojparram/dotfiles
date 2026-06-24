@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Instalador de dotfiles de Ricardo (Fedora / dnf).
 # Instala paquetes (nvim, lazygit, fastfetch, kitty, zsh, lsd, fzf, jq, ripgrep),
-# oh-my-zsh + plugins, runtimes JS (nvm/node/pnpm, bun), opencode, y aplica symlinks.
+# oh-my-zsh + plugins, runtimes JS (nvm/node/pnpm, bun), opencode, Homebrew
+# (engram + tools de Gentleman), JetBrains Nerd Font, y aplica symlinks.
 #
 # Uso remoto (PC nueva, repo aun no clonado):
 #   curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/install.sh | bash
@@ -68,7 +69,7 @@ fi
 cd "$REPO"
 
 # --- 1. paquetes (Fedora / dnf + curl installers) --------------------------
-DNF_PKGS=(git curl zsh neovim lazygit fastfetch kitty lsd fzf jq ripgrep)
+DNF_PKGS=(git curl zsh neovim lazygit fastfetch kitty lsd fzf jq ripgrep unzip gcc procps-ng fontconfig)
 
 if confirm "Instalar paquetes del sistema con dnf? (${DNF_PKGS[*]})"; then
   if command -v dnf >/dev/null; then
@@ -109,6 +110,44 @@ if confirm "Instalar runtimes JS (nvm/node LTS/pnpm, bun) y opencode?"; then
   }
   command -v bun      >/dev/null || curl -fsSL https://bun.sh/install | bash
   command -v opencode >/dev/null || curl -fsSL https://opencode.ai/install | bash
+fi
+
+# Homebrew + herramientas de Gentleman (engram corre sobre brew)
+if confirm "Instalar Homebrew + engram/gentle-ai/gga/gitleaks/lazydocker?"; then
+  if ! command -v brew >/dev/null && [[ ! -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    NONINTERACTIVE=1 /bin/bash -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  BREW_BIN="$(command -v brew || echo /home/linuxbrew/.linuxbrew/bin/brew)"
+  if [[ -x "$BREW_BIN" ]]; then
+    eval "$("$BREW_BIN" shellenv)"
+    brew tap gentleman-programming/tap 2>/dev/null || true
+    brew install gentleman-programming/tap/engram gentleman-programming/tap/gentle-ai \
+                 gentleman-programming/tap/gga gitleaks lazydocker
+    ok "Homebrew + herramientas instaladas."
+  else
+    warn "brew no disponible tras instalar; salto formulae."
+  fi
+fi
+
+# JetBrains Mono Nerd Font (iconos para lsd/fastfetch/kitty)
+if ! fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd Font"; then
+  if confirm "Instalar JetBrainsMono Nerd Font?"; then
+    FONT_DIR="$HOME/.local/share/fonts/JetBrainsMonoNerd"
+    mkdir -p "$FONT_DIR"
+    ftmp="$(mktemp -d)"
+    if curl -fLo "$ftmp/JBM.zip" \
+        https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip \
+       && unzip -oq "$ftmp/JBM.zip" -d "$FONT_DIR"; then
+      fc-cache -f "$FONT_DIR" >/dev/null
+      ok "JetBrainsMono Nerd Font instalada."
+    else
+      warn "Falló descarga/descompresión de la fuente."
+    fi
+    rm -rf "$ftmp"
+  fi
+else
+  ok "JetBrainsMono Nerd Font ya instalada."
 fi
 
 # shell por defecto -> zsh
