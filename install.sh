@@ -25,13 +25,17 @@ ok()    { printf '%s ✓%s %s\n' "$c_grn"  "$c_off" "$*"; }
 warn()  { printf '%s !%s %s\n' "$c_yel"  "$c_off" "$*"; }
 err()   { printf '%s ✗%s %s\n' "$c_red"  "$c_off" "$*" >&2; }
 
+# Lee de /dev/tty para funcionar bajo `curl | bash` (stdin = pipe). Si no hay
+# terminal controladora (CI/pipe), cae a stdin. Probamos apertura real, no -r.
+if ( : </dev/tty ) 2>/dev/null; then TTY=/dev/tty; else TTY=/dev/stdin; fi
 ask() { # ask "pregunta" default  -> stdout respuesta
-  local q="$1" def="${2:-}" ans
-  if [[ -n "$def" ]]; then read -rp "$q [$def]: " ans; echo "${ans:-$def}"
-  else read -rp "$q: " ans; echo "$ans"; fi
+  local q="$1" def="${2:-}" ans=""
+  read -rp "$q${def:+ [$def]}: " ans <"$TTY" 2>/dev/null || ans=""
+  echo "${ans:-$def}"
 }
 confirm() { # confirm "pregunta" -> 0 si y
-  local ans; read -rp "$1 [y/N] " ans; [[ "$ans" == y || "$ans" == Y ]]; }
+  local ans=""; read -rp "$1 [y/N] " ans <"$TTY" 2>/dev/null || ans=""
+  [[ "$ans" == y || "$ans" == Y ]]; }
 
 # Crea symlink src->dst. Respalda dst si es archivo/dir real (no symlink).
 link() {
@@ -105,11 +109,12 @@ if confirm "Instalar runtimes JS (nvm/node LTS/pnpm, bun) y opencode?"; then
   fi
   export NVM_DIR="$HOME/.nvm"
   # shellcheck disable=SC1091
-  [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" && {
-    nvm install --lts && corepack enable pnpm 2>/dev/null && ok "node LTS + pnpm"
-  }
-  command -v bun      >/dev/null || curl -fsSL https://bun.sh/install | bash
-  command -v opencode >/dev/null || curl -fsSL https://opencode.ai/install | bash
+  if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    . "$NVM_DIR/nvm.sh"
+    nvm install --lts && corepack enable pnpm 2>/dev/null && ok "node LTS + pnpm" || warn "node/pnpm: revisar"
+  fi
+  command -v bun      >/dev/null || curl -fsSL https://bun.sh/install     | bash || warn "bun: falló install"
+  command -v opencode >/dev/null || curl -fsSL https://opencode.ai/install | bash || warn "opencode: falló install"
 fi
 
 # Homebrew + herramientas de Gentleman (engram corre sobre brew)
@@ -123,8 +128,8 @@ if confirm "Instalar Homebrew + engram/gentle-ai/gga/gitleaks/lazydocker?"; then
     eval "$("$BREW_BIN" shellenv)"
     brew tap gentleman-programming/tap 2>/dev/null || true
     brew install gentleman-programming/tap/engram gentleman-programming/tap/gentle-ai \
-                 gentleman-programming/tap/gga gitleaks lazydocker
-    ok "Homebrew + herramientas instaladas."
+                 gentleman-programming/tap/gga gitleaks lazydocker \
+      && ok "Homebrew + herramientas instaladas." || warn "brew install: revisar (alguna formula falló)."
   else
     warn "brew no disponible tras instalar; salto formulae."
   fi
@@ -152,7 +157,7 @@ fi
 
 # shell por defecto -> zsh
 if [[ "${SHELL:-}" != *zsh ]] && command -v zsh >/dev/null && confirm "Poner zsh como shell por defecto?"; then
-  chsh -s "$(command -v zsh)" && ok "Shell cambiado a zsh (re-login para aplicar)."
+  chsh -s "$(command -v zsh)" && ok "Shell cambiado a zsh (re-login para aplicar)." || warn "chsh falló (cambialo a mano)."
 fi
 
 # --- 2. symlinks ------------------------------------------------------------
@@ -168,8 +173,8 @@ link "$REPO/config/agents-skills"              "$HOME/.agents/skills"
 
 # Firefox userChrome (opcional, perfil con nombre aleatorio por PC)
 if [[ -f "$REPO/userChrome.css" ]] && confirm "Symlinkear userChrome.css a un perfil de Firefox?"; then
-  prof="$(find "$HOME/.mozilla/firefox" -maxdepth 1 -name '*.default-release' -type d 2>/dev/null | head -1)"
-  [[ -z "$prof" ]] && prof="$(find "$HOME/.mozilla/firefox" -maxdepth 1 -name '*.default*' -type d 2>/dev/null | head -1)"
+  prof="$(find "$HOME/.mozilla/firefox" -maxdepth 1 -name '*.default-release' -type d 2>/dev/null | head -1 || true)"
+  [[ -z "$prof" ]] && prof="$(find "$HOME/.mozilla/firefox" -maxdepth 1 -name '*.default*' -type d 2>/dev/null | head -1 || true)"
   if [[ -n "$prof" ]]; then
     link "$REPO/userChrome.css" "$prof/chrome/userChrome.css"
     warn "Activá toolkit.legacyUserProfileCustomizations.stylesheets=true en about:config"
