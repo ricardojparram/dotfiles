@@ -188,7 +188,6 @@ if [[ -f "$MCP_SNAP" ]] && confirm "Mergear MCP servers en ~/.claude.json?"; the
     tmp="$(mktemp)"
     jq -s '.[0] * {mcpServers: ((.[0].mcpServers // {}) * .[1].mcpServers)}' "$CJ" "$MCP_SNAP" > "$tmp" && mv "$tmp" "$CJ"
     ok "MCP mergeados (backup $CJ.bak.$STAMP)"
-    warn "Revisá ruta de 'pencil' (versión de extensión VSCode cambia por PC)."
   else
     warn "jq no instalado; mergeá $MCP_SNAP en ~/.claude.json a mano."
   fi

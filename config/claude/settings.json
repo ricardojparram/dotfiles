@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "mcp__pencil",
       "Bash(grep -nE '$ZodType|StandardSchemaV1|isZodSchema|isV4Schema' apps/checkout/node_modules/@hookform/resolvers/zod/src/zod.ts)",
       "Bash(grep -nA 8 \"export function zodResolver\" apps/checkout/node_modules/@hookform/resolvers/zod/src/zod.ts)",
       "Bash(pnpm install *)",

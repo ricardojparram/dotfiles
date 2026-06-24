@@ -39,9 +39,6 @@ ln -sfn "$DOT/config/agents-skills" ~/.agents/skills
 historial de proyectos que NO se sube). En PC nuevo, mergear la clave
 `mcpServers` en `~/.claude.json` o recrear con `claude mcp add`.
 
-⚠️ **pencil** apunta a ruta de extensión VSCode versionada
-(`highagency.pencildev-0.6.37`) — ajustar versión en PC nuevo.
-
 ## Memorias (engram + nativa) — NO se suben a este repo
 
 Script: `~/Documentos/scripts/backup-memories.sh` (fuera del repo).
