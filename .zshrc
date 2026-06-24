@@ -115,7 +115,7 @@ alias clear="clear && fastfetch"
 export PATH=$HOME/.local/bin:$PATH
 
 # bun completions
-[ -s "/home/ricardo/.bun/_bun" ] && source "/home/ricardo/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -126,7 +126,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/home/ricardo/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME/bin:"*) ;;
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
@@ -137,7 +137,7 @@ alias ls='lsd --group-directories-first --git'
 alias vim='nvim'
 
 # opencode
-export PATH=/home/ricardo/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 
@@ -147,7 +147,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # Added by Antigravity CLI installer
-export PATH="/home/ricardo/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Historial de comandos
 HISTFILE=~/.zsh_history
