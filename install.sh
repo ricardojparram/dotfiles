@@ -30,11 +30,12 @@ err()   { printf '%s ✗%s %s\n' "$c_red"  "$c_off" "$*" >&2; }
 if ( : </dev/tty ) 2>/dev/null; then TTY=/dev/tty; else TTY=/dev/stdin; fi
 ask() { # ask "pregunta" default  -> stdout respuesta
   local q="$1" def="${2:-}" ans=""
-  read -rp "$q${def:+ [$def]}: " ans <"$TTY" 2>/dev/null || ans=""
+  # OJO: prompt de read va a stderr; NO redirigir 2>/dev/null o se oculta.
+  read -rp "$q${def:+ [$def]}: " ans <"$TTY" || ans=""
   echo "${ans:-$def}"
 }
 confirm() { # confirm "pregunta" -> 0 si y
-  local ans=""; read -rp "$1 [y/N] " ans <"$TTY" 2>/dev/null || ans=""
+  local ans=""; read -rp "$1 [y/N] " ans <"$TTY" || ans=""
   [[ "$ans" == y || "$ans" == Y ]]; }
 
 # Crea symlink src->dst. Respalda dst si es archivo/dir real (no symlink).
