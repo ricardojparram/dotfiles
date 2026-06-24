@@ -54,9 +54,10 @@ Si ya tenés el repo clonado:
 
 - **Secrets** — `~/.zshrc.local` (cargado por `.zshrc`). Creálo a mano con
   tus API keys; queda fuera del repo.
-- **Memorias de Claude** — aparte de los dotfiles. Script
-  `~/Documentos/scripts/backup-memories.sh` (+ tarballs en `./data`).
-  Llevá esa carpeta por USB a la PC nueva y corré
-  `backup-memories.sh restore`. No tiene que ver con `install.sh`.
+- **Memorias + chats de Claude** — aparte de los dotfiles. Script
+  `~/Documentos/scripts/backup-memories.sh` (+ tarballs en `./data`) respalda
+  engram, memoria nativa y los transcripts `.jsonl`. Llevá esa carpeta por USB
+  a la PC nueva y corré `backup-memories.sh restore`. No tiene que ver con
+  `install.sh`.
 
 Ver `config/claude/README.md` para detalle de MCP.

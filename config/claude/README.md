@@ -40,19 +40,26 @@ historial de proyectos que NO se sube). Servers: `codegraph`, `next-devtools`,
 `shadcn`. En PC nuevo, mergear la clave `mcpServers` en `~/.claude.json` o
 recrear con `claude mcp add`.
 
-## Memorias (engram + nativa) — NO se suben a este repo
+## Memorias + chats — NO se suben a este repo
 
 Script: `~/Documentos/scripts/backup-memories.sh` (fuera del repo).
 Tarballs en `~/Documentos/scripts/data/`.
 
 ```sh
-~/Documentos/scripts/backup-memories.sh            # crear backup
-~/Documentos/scripts/backup-memories.sh restore <archivo.tar.gz>  # restaurar (Claude cerrado)
+~/Documentos/scripts/backup-memories.sh           # crear backup
+~/Documentos/scripts/backup-memories.sh restore   # restaurar el más reciente (Claude cerrado)
+~/Documentos/scripts/backup-memories.sh restore <archivo.tar.gz>  # uno específico
 ```
 
-El tarball incluye `~/.engram/engram.db` + memoria nativa
-(`~/.claude/projects/*/memory/`), con rutas relativas a `$HOME`.
-Restore directo si el PC nuevo tiene mismo usuario/layout.
+El tarball incluye, con rutas relativas a `$HOME`:
+- `~/.engram/engram.db` (memoria del plugin)
+- memoria nativa `~/.claude/projects/*/memory/`
+- **chats/transcripts** `~/.claude/projects/*/*.jsonl`
+
+Restore directo si el PC nuevo tiene mismo usuario/layout. **Chats:** el dir de
+cada proyecto codifica su ruta absoluta, así que el historial solo resuelve si
+el usuario y las rutas de los proyectos coinciden; si no, los `.jsonl` quedan
+guardados pero Claude no los asocia a los proyectos nuevos.
 
 Sync alternativo de engram entre PCs:
 
