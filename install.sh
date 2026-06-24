@@ -164,8 +164,19 @@ else
 fi
 
 # shell por defecto -> zsh
-if [[ "${SHELL:-}" != *zsh ]] && command -v zsh >/dev/null && confirm "Poner zsh como shell por defecto?"; then
-  chsh -s "$(command -v zsh)" && ok "Shell cambiado a zsh (re-login para aplicar)." || warn "chsh falló (cambialo a mano)."
+# Comparamos contra el shell REAL de /etc/passwd, no $SHELL (que es solo el env
+# heredado y puede mentir). chsh sin sudo falla callado por PAM en scripts, así
+# que usamos sudo chsh y verificamos el resultado leyendo passwd de nuevo.
+ZSH_BIN="$(command -v zsh || true)"
+CUR_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
+if [[ -n "$ZSH_BIN" && "$CUR_SHELL" != *zsh ]] && confirm "Poner zsh como shell por defecto?"; then
+  grep -qxF "$ZSH_BIN" /etc/shells 2>/dev/null || echo "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null
+  sudo chsh -s "$ZSH_BIN" "$USER" || chsh -s "$ZSH_BIN" || warn "chsh falló (cambialo a mano: chsh -s $ZSH_BIN)."
+  if [[ "$(getent passwd "$USER" | cut -d: -f7)" == *zsh ]]; then
+    ok "Shell por defecto: zsh. Cerrá sesión y volvé a entrar para aplicarlo (reabrir kitty no basta)."
+  else
+    warn "El shell por defecto sigue sin ser zsh; corré: sudo chsh -s $ZSH_BIN $USER"
+  fi
 fi
 
 # --- 2. symlinks ------------------------------------------------------------
