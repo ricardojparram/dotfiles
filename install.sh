@@ -74,12 +74,19 @@ fi
 cd "$REPO"
 
 # --- 1. paquetes (Fedora / dnf + curl installers) --------------------------
-DNF_PKGS=(git curl zsh neovim lazygit fastfetch kitty lsd fzf jq ripgrep unzip gcc procps-ng fontconfig)
+# lazygit NO está en los repos base de Fedora: va por COPR (repo oficial).
+DNF_PKGS=(git curl zsh neovim fastfetch kitty lsd fzf jq ripgrep unzip gcc procps-ng fontconfig dnf-plugins-core)
 
-if confirm "Instalar paquetes del sistema con dnf? (${DNF_PKGS[*]})"; then
+if confirm "Instalar paquetes del sistema con dnf? (${DNF_PKGS[*]} + lazygit via COPR)"; then
   if command -v dnf >/dev/null; then
     sudo dnf install -y "${DNF_PKGS[@]}"
     ok "Paquetes dnf instalados."
+    # lazygit: habilitar COPR oficial e instalar
+    if ! command -v lazygit >/dev/null; then
+      sudo dnf copr enable -y dejan/lazygit && sudo dnf install -y lazygit \
+        && ok "lazygit instalado (COPR dejan/lazygit)." \
+        || warn "lazygit: falló COPR/install (revisá manualmente)."
+    fi
   else
     warn "dnf no encontrado (¿no es Fedora?). Salto paquetes del sistema."
   fi

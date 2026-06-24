@@ -11,7 +11,8 @@ curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/instal
 `install.sh` (Fedora/dnf) clona el repo, instala paquetes y herramientas,
 aplica los symlinks y pregunta lo que haga falta. Pasos (cada uno confirmable):
 
-1. **Paquetes dnf**: `nvim lazygit fastfetch kitty zsh lsd fzf jq ripgrep unzip gcc …`.
+1. **Paquetes dnf**: `nvim fastfetch kitty zsh lsd fzf jq ripgrep unzip gcc …`
+   (+ `lazygit` desde el COPR oficial `dejan/lazygit`, no está en repos base).
 2. **oh-my-zsh** + plugins `zsh-autosuggestions`, `zsh-syntax-highlighting`.
 3. **Runtimes JS**: nvm + node LTS + pnpm (corepack), bun. **opencode**.
 4. **Homebrew** + tap de Gentleman: `engram`, `gentle-ai`, `gga`, `gitleaks`, `lazydocker`.
