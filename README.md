@@ -9,7 +9,7 @@ curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/instal
 ```
 
 `install.sh` clona el repo, aplica los symlinks y pregunta lo que haga falta
-(GEMINI_API_KEY, merge de MCP, userChrome de Firefox).
+(merge de MCP, userChrome de Firefox).
 Es idempotente: re-correrlo solo re-aplica symlinks y respalda lo que pise
 en `*.bak.<fecha>`.
 
@@ -33,8 +33,8 @@ Si ya tenés el repo clonado:
 
 ## Fuera del repo (no se versionan)
 
-- **Secrets** — `~/.zshrc.local` (cargado por `.zshrc`). Contiene la
-  GEMINI_API_KEY. `install.sh` lo crea si das la key.
+- **Secrets** — `~/.zshrc.local` (cargado por `.zshrc`). Creálo a mano con
+  tus API keys; queda fuera del repo.
 - **Memorias de Claude** — aparte de los dotfiles. Script
   `~/Documentos/scripts/backup-memories.sh` (+ tarballs en `./data`).
   Llevá esa carpeta por USB a la PC nueva y corré

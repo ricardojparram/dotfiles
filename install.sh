@@ -88,23 +88,7 @@ if [[ -f "$REPO/userChrome.css" ]] && confirm "Symlinkear userChrome.css a un pe
   fi
 fi
 
-# --- 2. secrets (~/.zshrc.local) -------------------------------------------
-if [[ ! -f "$HOME/.zshrc.local" ]]; then
-  info "Secrets: el .zshrc fuente carga ~/.zshrc.local (fuera del repo)."
-  key="$(ask "GEMINI_API_KEY (enter para saltar)" "")"
-  if [[ -n "$key" ]]; then
-    umask 077
-    printf 'export GEMINI_API_KEY="%s"\n' "$key" > "$HOME/.zshrc.local"
-    chmod 600 "$HOME/.zshrc.local"
-    ok "~/.zshrc.local creado (chmod 600)"
-  else
-    warn "Saltado. Creá ~/.zshrc.local manual si necesitás la key."
-  fi
-else
-  ok "~/.zshrc.local ya existe, no lo toco."
-fi
-
-# --- 3. MCP servers (merge en ~/.claude.json) ------------------------------
+# --- 2. MCP servers (merge en ~/.claude.json) ------------------------------
 MCP_SNAP="$REPO/config/claude/mcp-servers.json"
 if [[ -f "$MCP_SNAP" ]] && confirm "Mergear MCP servers en ~/.claude.json?"; then
   if command -v jq >/dev/null; then
@@ -122,5 +106,5 @@ fi
 
 echo
 ok "Instalación terminada."
-info "Pendiente manual: rotar la GEMINI_API_KEY si la reusaste; abrir nvim para que LazyVim instale plugins."
+info "Pendiente manual: abrir nvim para que LazyVim instale plugins."
 info "Reiniciá la shell:  exec zsh"
