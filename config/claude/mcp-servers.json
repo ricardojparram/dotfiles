@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "pencil": {
+      "command": "/home/ricardo/.vscode/extensions/highagency.pencildev-0.6.37/out/mcp-server-linux-x64",
+      "args": [
+        "--app",
+        "visual_studio_code"
+      ],
+      "env": {},
+      "type": "stdio"
+    },
+    "codegraph": {
+      "type": "stdio",
+      "command": "codegraph",
+      "args": [
+        "serve",
+        "--mcp"
+      ]
+    },
+    "shadcn": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ],
+      "env": {}
+    },
+    "next-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ],
+      "env": {}
+    }
+  }
+}
