@@ -42,15 +42,23 @@ historial de proyectos que NO se sube). En PC nuevo, mergear la clave
 ⚠️ **pencil** apunta a ruta de extensión VSCode versionada
 (`highagency.pencildev-0.6.37`) — ajustar versión en PC nuevo.
 
-## Engram (memoria persistente) — NO se sube a este repo
+## Memorias (engram + nativa) — NO se suben a este repo
 
-Backup local en `~/Backups/engram/` (copia de `~/.engram/engram.db`).
+Script: `~/Documentos/scripts/backup-memories.sh` (fuera del repo).
+Tarballs en `~/Documentos/scripts/data/`.
 
-Sync entre PCs (de más a menos recomendado):
+```sh
+~/Documentos/scripts/backup-memories.sh            # crear backup
+~/Documentos/scripts/backup-memories.sh restore <archivo.tar.gz>  # restaurar (Claude cerrado)
+```
+
+El tarball incluye `~/.engram/engram.db` + memoria nativa
+(`~/.claude/projects/*/memory/`), con rutas relativas a `$HOME`.
+Restore directo si el PC nuevo tiene mismo usuario/layout.
+
+Sync alternativo de engram entre PCs:
 
 1. **Git sync nativo de engram** — chunks comprimidos, sin merge conflicts.
    Repo privado aparte. Ver docs: github.com/Gentleman-Programming/engram
 2. **Cloud opt-in** — replicación project-scoped. Local SQLite siempre es
    la fuente de verdad; aunque el cloud falle no se pierden datos.
-3. **Manual** — copiar `~/Backups/engram/engram.db` → `~/.engram/engram.db`
-   en el PC nuevo (cerrar Claude antes; borrar `engram.db-wal`/`-shm`).
