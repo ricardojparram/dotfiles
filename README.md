@@ -8,10 +8,18 @@ Config personal: zsh, kitty, nvim (LazyVim), fastfetch, Claude Code, skills, Fir
 curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/install.sh | bash
 ```
 
-`install.sh` clona el repo, aplica los symlinks y pregunta lo que haga falta
-(merge de MCP, userChrome de Firefox).
-Es idempotente: re-correrlo solo re-aplica symlinks y respalda lo que pise
-en `*.bak.<fecha>`.
+`install.sh` (Fedora/dnf) clona el repo, instala paquetes y herramientas,
+aplica los symlinks y pregunta lo que haga falta. Pasos (cada uno confirmable):
+
+1. **Paquetes dnf**: `nvim lazygit fastfetch kitty zsh lsd fzf jq ripgrep` (+git/curl).
+2. **oh-my-zsh** + plugins `zsh-autosuggestions`, `zsh-syntax-highlighting`.
+3. **Runtimes JS**: nvm + node LTS + pnpm (corepack), bun. **opencode**.
+4. **Shell** por defecto → zsh.
+5. **Symlinks** (ver tabla).
+6. **MCP** merge en `~/.claude.json`. **userChrome** de Firefox (opcional).
+
+Es idempotente: respalda archivos reales que pise en `*.bak.<fecha>` y saltea
+lo ya instalado.
 
 Si ya tenés el repo clonado:
 
