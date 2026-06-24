@@ -120,13 +120,6 @@ if [[ -f "$MCP_SNAP" ]] && confirm "Mergear MCP servers en ~/.claude.json?"; the
   fi
 fi
 
-# --- 4. memorias (engram + nativa) -----------------------------------------
-MEM="$HOME/Documentos/scripts/backup-memories.sh"
-if [[ -x "$MEM" ]] && confirm "Restaurar memorias (engram + nativa) desde backup más reciente?"; then
-  warn "Cerrá Claude Code antes de continuar."
-  "$MEM" restore
-fi
-
 echo
 ok "Instalación terminada."
 info "Pendiente manual: rotar la GEMINI_API_KEY si la reusaste; abrir nvim para que LazyVim instale plugins."

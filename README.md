@@ -9,7 +9,7 @@ curl -fsSL https://raw.githubusercontent.com/ricardojparram/dotfiles/main/instal
 ```
 
 `install.sh` clona el repo, aplica los symlinks y pregunta lo que haga falta
-(GEMINI_API_KEY, merge de MCP, userChrome de Firefox, restaurar memorias).
+(GEMINI_API_KEY, merge de MCP, userChrome de Firefox).
 Es idempotente: re-correrlo solo re-aplica symlinks y respalda lo que pise
 en `*.bak.<fecha>`.
 
@@ -35,8 +35,9 @@ Si ya tenés el repo clonado:
 
 - **Secrets** — `~/.zshrc.local` (cargado por `.zshrc`). Contiene la
   GEMINI_API_KEY. `install.sh` lo crea si das la key.
-- **Memorias de Claude** — script `~/Documentos/scripts/backup-memories.sh`
-  (+ tarballs en `./data`). Llevá esa carpeta por USB a la PC nueva; el
-  `install.sh` ofrece restaurar el backup más reciente.
+- **Memorias de Claude** — aparte de los dotfiles. Script
+  `~/Documentos/scripts/backup-memories.sh` (+ tarballs en `./data`).
+  Llevá esa carpeta por USB a la PC nueva y corré
+  `backup-memories.sh restore`. No tiene que ver con `install.sh`.
 
-Ver `config/claude/README.md` para detalle de MCP y memorias.
+Ver `config/claude/README.md` para detalle de MCP.
