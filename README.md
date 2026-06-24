@@ -19,10 +19,18 @@ aplica los symlinks y pregunta lo que haga falta. Pasos (cada uno confirmable):
 5. **JetBrainsMono Nerd Font** (iconos para lsd/fastfetch/kitty).
 6. **Shell** por defecto → zsh.
 7. **Symlinks** (ver tabla).
-8. **MCP** merge en `~/.claude.json`. **userChrome** de Firefox (opcional).
+8. **MCP** (`codegraph`, `next-devtools`, `shadcn`) merge en `~/.claude.json`.
+   **userChrome** de Firefox (opcional).
 
 Es idempotente: respalda archivos reales que pise en `*.bak.<fecha>` y saltea
 lo ya instalado.
+
+## Portabilidad
+
+Funciona para cualquier usuario, sin importar el path: `install.sh` detecta el
+repo solo y usa `$HOME` en todo; los configs versionados (`.zshrc`, etc.) no
+tienen rutas hardcodeadas a un usuario. Un `curl | bash` desde otra cuenta deja
+el entorno funcional sin editar nada.
 
 Si ya tenés el repo clonado:
 

@@ -36,8 +36,9 @@ ln -sfn "$DOT/config/agents-skills" ~/.agents/skills
 ### MCPs
 
 `mcp-servers.json` es snapshot (no symlink, porque `~/.claude.json` tiene
-historial de proyectos que NO se sube). En PC nuevo, mergear la clave
-`mcpServers` en `~/.claude.json` o recrear con `claude mcp add`.
+historial de proyectos que NO se sube). Servers: `codegraph`, `next-devtools`,
+`shadcn`. En PC nuevo, mergear la clave `mcpServers` en `~/.claude.json` o
+recrear con `claude mcp add`.
 
 ## Memorias (engram + nativa) — NO se suben a este repo
 
